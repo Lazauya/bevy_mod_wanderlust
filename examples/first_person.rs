@@ -17,7 +17,7 @@ use std::f32::consts::FRAC_2_PI;
 
 fn main() {
     App::new()
-        .add_plugins((
+        .add_plugins(
             DefaultPlugins.set(WindowPlugin {
                 primary_window: Some(Window {
                     cursor: Cursor {
@@ -28,15 +28,23 @@ fn main() {
                     ..default()
                 }),
                 ..default()
-            }),
+            })
+        )
+        .add_plugins(
             RapierPhysicsPlugin::<NoUserData>::default(),
             // This plugin was causing unhelpful glitchy orange planes, so it's commented out until
             // it's working again
             // RapierDebugRenderPlugin::default(),
+        )
+        .add_plugins(
             WanderlustPlugin::default(),
+        )
+        .add_plugins(
             aether_spyglass::SpyglassPlugin,
+        )
+        .add_plugins(
             FramepacePlugin,
-        ))
+        )
         .insert_resource(RapierConfiguration {
             timestep_mode: TimestepMode::Fixed {
                 dt: 0.008,
@@ -119,7 +127,7 @@ fn setup(
                         projection: Projection::Perspective(PerspectiveProjection {
                             fov: 90.0 * (std::f32::consts::PI / 180.0),
                             aspect_ratio: 1.0,
-                            near: 0.1,
+                            near: 0.35,
                             far: 1000.0,
                         }),
                         ..default()
